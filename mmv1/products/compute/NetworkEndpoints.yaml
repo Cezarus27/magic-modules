@@ -134,3 +134,25 @@ properties:
             to a VM in GCE (either the primary IP or as part of an aliased IP
             range).
           required: true
+        - name: 'ipv6Address'
+          type: String
+          description: |
+            Optional IPv6 address of network endpoint.
+          min_version: 'beta'
+        - name: 'fqdn'
+          type: String
+          description: |
+            Optional fully qualified domain name of network endpoint.
+            This can only be specified when NetworkEndpointGroup.network_endpoint_type is NON_GCP_FQDN_PORT.
+          min_version: 'beta'
+        - name: 'clientDestinationPort'
+          type: Integer
+          description: |
+            Represents the port number to which PSC consumer sends packets. Optional.
+            Only valid for network endpoint groups created with GCE_VM_IP_PORTMAP endpoint type.
+          min_version: 'beta'
+        - name: 'annotations'
+          type: KeyValueAnnotations
+          description: |
+            Optional metadata defined as annotations on the network endpoint.
+          min_version: 'beta'
