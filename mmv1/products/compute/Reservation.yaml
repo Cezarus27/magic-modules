@@ -193,11 +193,15 @@ properties:
         item_type:
           type: String
         min_version: 'beta'
+  - name: 'resourcePolicies'
+    type: KeyValuePairs
+    description: |
+      Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
+    immutable: true
   - name: 'specificReservation'
     type: NestedObject
     description: |
       Reservation for instances with specific machine shapes.
-    required: true
     update_url: 'projects/{{project}}/zones/{{zone}}/reservations/{{name}}/resize'
     update_verb: 'POST'
     properties:
@@ -315,6 +319,45 @@ properties:
         exactly_one_of:
           - 'specific_reservation.0.instance_properties'
           - 'specific_reservation.0.source_instance_template'
+  - name: 'aggregateReservation'
+    type: NestedObject
+    description: |
+      Reservation for aggregated resources, providing shape flexibility.
+    properties:
+      - name: 'vmFamily'
+        type: Enum
+        description: |
+          The VM family that all instances scheduled against this reservation must belong to.
+        immutable: true
+        enum_values:
+          - 'VM_FAMILY_CLOUD_TPU_DEVICE_CT3'
+          - 'VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L'
+          - 'VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP'
+          - 'VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT6E'
+          - 'VM_FAMILY_CLOUD_TPU_POD_SLICE_CT3P'
+          - 'VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P'
+          - 'VM_FAMILY_CLOUD_TPU_POD_SLICE_CT5P'
+          - 'VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU7X'
+      - name: 'workloadType'
+        type: Enum
+        description: |
+          The workload type of the instances that will target this reservation.
+        immutable: true
+        enum_values:
+          - 'BATCH'
+          - 'SERVING'
+      - name: 'reservedResources'
+        type: NestedObject
+        description: |
+          The resources reserved by this reservation.
+        required: true
+        properties:
+          - name: 'acceleratorType'
+            type: String
+            default_from_api: true
+            description: |
+              Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            immutable: true
   - name: 'deleteAtTime'
     type: String
     description: |
@@ -359,6 +402,21 @@ properties:
           - 'ALLOW_ALL'
           - 'DISALLOW_ALL'
         default_from_api: true
+        immutable: true
+  - name: 'advancedDeploymentControl'
+    type: NestedObject
+    description: |
+      Advanced control for cluster management, applicable only to DENSE deployment type reservations.
+    immutable: true
+    # ignore_read: true
+    properties:
+      - name: 'reservationOperationalMode'
+        type: Enum
+        enum_values:
+          - 'ALL_CAPACITY'
+          - 'HIGHLY_AVAILABLE_CAPACITY'
+        description: |
+          Indicates chosen reservation operational mode for the reservation.
         immutable: true
   - name: 'enableEmergentMaintenance'
     type: Boolean
