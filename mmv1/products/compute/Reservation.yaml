@@ -367,6 +367,28 @@ properties:
     immutable: true
     ignore_read: true
     min_version: 'beta'
+  - name: 'protectionTier'
+    type: Enum
+    description: |
+      Protection tier for the workload which specifies the workload expectations in the event of infrastructure failures at data center (e.g. power and/or cooling failures).
+    enum_values:
+      - 'CAPACITY_OPTIMIZED'
+      - 'PROTECTION_TIER_UNSPECIFIED'
+      - 'STANDARD'
+  - name: 'deploymentType'
+    type: Enum
+    description: |
+      Protection tier for the workload which specifies the workload expectations in the event of infrastructure failures at data center (e.g. power and/or cooling failures).
+    enum_values:
+      - 'DENSE'
+      - 'FLEXIBLE'
+  - name: 'schedulingType'
+    type: Enum
+    description: |
+      Protection tier for the workload which specifies the workload expectations in the event of infrastructure failures at data center (e.g. power and/or cooling failures).
+    enum_values:
+      - 'GROUPED'
+      - 'INDEPENDENT'
   - name: 'reservationBlockCount'
     type: Integer
     description: |
