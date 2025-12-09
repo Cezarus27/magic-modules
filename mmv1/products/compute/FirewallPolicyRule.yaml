@@ -102,6 +102,18 @@ properties:
   - name: 'description'
     type: String
     description: 'An optional description for this resource.'
+  - name: 'ruleName'
+    type: String
+    description: |
+      An optional name for the rule. This field is not a unique identifier and can be updated.
+  - name: 'targetType'
+    type: Enum
+    description: |
+      Target types of the firewall policy rule. Default value is INSTANCES.
+    enum_values:
+      - 'INSTANCES'
+      - 'INTERNAL_MANAGED_LB'
+    default_value: 'INSTANCES'
   - name: 'priority'
     type: Integer
     immutable: true
@@ -256,6 +268,24 @@ properties:
               enum_values:
                 - 'EFFECTIVE'
                 - 'INEFFECTIVE'
+      - name: 'destNetworkType'
+        type: Enum
+        description: |
+          Network type of the traffic destination. Allowed values are:
+          - INTERNET
+          - NON_INTERNET
+        enum_values:
+          - 'INTERNET'
+          - 'NON_INTERNET'
+      - name: 'srcNetworkType'
+        type: Enum
+        description: |
+          Network type of the traffic source. Allowed values are:
+          - INTERNET
+          - NON_INTERNET
+        enum_values:
+          - 'INTERNET'
+          - 'NON_INTERNET'
   - name: 'action'
     type: String
     description: 'The Action to perform when the client connection triggers the rule. Valid actions are "allow", "deny", "goto_next" and "apply_security_profile_group".'
