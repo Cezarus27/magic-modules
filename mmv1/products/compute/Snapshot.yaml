@@ -305,3 +305,37 @@ properties:
     enum_values:
       - 'ARCHIVE'
       - 'STANDARD'
+  - name: 'sourceInstantSnapshotEncryptionKey'
+    type: NestedObject
+    description: |
+      Customer provided encryption key when creating Snapshot from Instant Snapshot.
+    properties:
+      - name: 'rawKey'
+        type: String
+        description: |
+          Specifies a 256-bit customer-supplied encryption key,
+          encoded in RFC 4648 base64 to either encrypt or decrypt this resource.
+          You can provide either the rawKey or the rsaEncryptedKey.
+        sensitive: true
+        ignore_read: true
+      - name: 'rsaEncryptedKey'
+        type: String
+        description: |
+          Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit customer-supplied
+          encryption key to either encrypt or decrypt this resource.
+          You can provide either the raw_key or the rsa_encrypted_key.
+        sensitive: true
+        ignore_read: true
+      - name: 'kmsKeyName'
+        type: String
+        description: |
+          The name of the encryption key that is stored in Google Cloud KMS.
+        sensitive: true
+        ignore_read: true
+      - name: 'kmsKeyServiceAccount'
+        type: String
+        description: |
+          The service account being used for the encryption request for the given KMS key.
+          If absent, the Compute Engine default service accountis used.
+        sensitive: true
+        ignore_read: true
